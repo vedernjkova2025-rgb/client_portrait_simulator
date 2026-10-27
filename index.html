@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; connect-src 'none'; img-src data: blob:; media-src data: blob:; font-src data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; form-action 'none'">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Портрет клиента — Витрина услуг TravelLine</title>
+  <style>
+    :root {
+      --primary: #227BDD;
+      --primary-light: #F0F6FD;
+      --primary-border: #BCD8F8;
+      --primary-pulse: rgba(34, 123, 221, 0.35);
+      --text: #1E293B;
+      --text-muted: #64748B;
+      --bg: #FFFFFF;
+      --border: #E2E8F0;
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 32px 20px;
+    }
+
+    .widget {
+      width: 100%;
+      max-width: 960px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    /* Навигация по 3 сегментам */
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      background: #F8FAFC;
+      padding: 8px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 15.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      line-height: 1.35;
+    }
+
+    .tab-btn:hover {
+      color: var(--text);
+      background: #FFFFFF;
+    }
+
+    .tab-btn.active {
+      background: #FFFFFF;
+      color: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 3px 10px rgba(34, 123, 221, 0.08);
+    }
+
+    .tab-btn.pulse {
+      animation: pulseTab 1.6s infinite;
+    }
+
+    @keyframes pulseTab {
+      0% {
+        box-shadow: 0 0 0 0 var(--primary-pulse);
+        border-color: var(--primary);
+      }
+      70% {
+        box-shadow: 0 0 0 8px rgba(34, 123, 221, 0);
+        border-color: var(--primary);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(34, 123, 221, 0);
+        border-color: var(--primary);
+      }
+    }
+
+    /* Карточка с контентом */
+    .card {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
+    }
+
+    .card-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+
+    /* Блок: Что продают */
+    .section-block {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .section-label {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-muted);
+    }
+
+    .services-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      background: #F8FAFC;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 9px 16px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      transition: all 0.2s ease;
+    }
+
+    .tag:hover {
+      border-color: #CBD5E1;
+      background: #FFFFFF;
+    }
+
+    .tag-icon {
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Сравнение: Главная проблема vs Решение Витрины */
+    .comparison-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 4px;
+    }
+
+    .info-box {
+      border-radius: 12px;
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .info-box.pain {
+      background: #FAFAFA;
+      border: 1px solid #E5E7EB;
+      color: #334155;
+    }
+
+    .info-box.pain .box-title {
+      font-weight: 700;
+      font-size: 13px;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .info-box.solution {
+      background: var(--primary-light);
+      border: 1px solid var(--primary-border);
+      color: #1E3A8A;
+    }
+
+    .info-box.solution .box-title {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Нижняя панель действий */
+    .footer-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid #F1F5F9;
+    }
+
+    .btn-action {
+      background: var(--primary);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 10px;
+      padding: 13px 28px;
+      font-size: 15.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(34, 123, 221, 0.25);
+    }
+
+    .btn-action:hover {
+      background: #1B6DC7;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(34, 123, 221, 0.35);
+    }
+
+    @media (max-width: 760px) {
+      .tabs {
+        grid-template-columns: 1fr;
+      }
+      .card {
+        padding: 24px 20px;
+      }
+      .comparison-row {
+        grid-template-columns: 1fr;
+      }
+      .card-title {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="widget">
+    <!-- Навигация -->
+    <div class="tabs">
+      <button class="tab-btn active" id="tab-0" onclick="showSegment(0)">Загородные клубы и базы</button>
+      <button class="tab-btn" id="tab-1" onclick="showSegment(1)">Курортные и спа-отели</button>
+      <button class="tab-btn" id="tab-2" onclick="showSegment(2)">Day-use (открытая инфра)</button>
+    </div>
+
+    <!-- Карточка сегмента -->
+    <div class="card">
+      <h2 class="card-title" id="title">Загородные клубы, глэмпинги и базы отдыха</h2>
+
+      <div class="section-block">
+        <span class="section-label">Что продают</span>
+        <div class="services-tags" id="services">
+          <!-- Теги с иконками генерируются скриптом -->
+        </div>
+      </div>
+
+      <div class="comparison-row">
+        <div class="info-box pain">
+          <span class="box-title">Главная проблема</span>
+          <p id="pain"></p>
+        </div>
+        <div class="info-box solution">
+          <span class="box-title">Решение Витрины</span>
+          <p id="solution"></p>
+        </div>
+      </div>
+
+      <div class="footer-actions">
+        <button class="btn-action" id="btnNext" onclick="nextSegment()">
+          <span>Следующий сегмент</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Минималистичные линейные SVG иконки
+    var icons = {
+      bath: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4v-3a1 1 0 0 1 1-1Z"/><path d="M6 12V5a2 2 0 0 1 2-2h3v9"/><path d="M5 20v2"/><path d="M19 20v2"/></svg>',
+      flame: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1.5 3 4 5.5 4 8.5a6 6 0 1 1-12 0c0-3 2.5-5.5 4-8.5 1 2 2 3 4 0Z"/></svg>',
+      house: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+      umbrella: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M21 12a9 9 0 0 0-18 0c0 .5.5 1 1 1h16c.5 0 1-.5 1-1Z"/></svg>',
+      ride: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17h12"/><path d="M9 17l3-7h4l2 4"/></svg>',
+      massage: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v5"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-5.7-2.3L3.6 17a2 2 0 0 1 2.8-2.8L8 16"/></svg>',
+      sparkles: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z"/></svg>',
+      thermal: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>',
+      pool: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c1.5-1.5 3.5-1.5 5 0s3.5 1.5 5 0 3.5-1.5 5 0 3.5 1.5 5 0"/><path d="M2 17c1.5-1.5 3.5-1.5 5 0s3.5 1.5 5 0 3.5-1.5 5 0 3.5 1.5 5 0"/></svg>',
+      sun: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>'
+    };
+
+    var data = [
+      {
+        title: "Загородные клубы, глэмпинги и базы отдыха",
+        services: [
+          { text: "Русские бани", icon: "bath" },
+          { text: "Банные чаны", icon: "flame" },
+          { text: "Гриль-домики", icon: "house" },
+          { text: "Прокат квадроциклов и снегоходов", icon: "ride" }
+        ],
+        pain: "Бани и чаны требуют 2–3 часа на растопку. Без предварительного заказа возникают авралы и очереди прямо на стойке.",
+        solution: "Витрина в welcome-письмах за 2–3 дня собирает эти заказы заранее, убирая аврал на стойке в пятницу вечером."
+      },
+      {
+        title: "Курортные и спа-отели",
+        services: [
+          { text: "Массажи", icon: "massage" },
+          { text: "Уходовые процедуры", icon: "sparkles" },
+          { text: "Посещение термальных зон", icon: "thermal" }
+        ],
+        pain: "Мастера работают под запись. Администраторы тратят много времени на ручной подбор окон и переписки.",
+        solution: "Витрина заполняет сетку расписания без участия администратора в переписках."
+      },
+      {
+        title: "Объекты с открытой инфраструктурой (day-use)",
+        services: [
+          { text: "Вход в бассейн", icon: "pool" },
+          { text: "Пляж", icon: "sun" },
+          { text: "Беседки жителям города без проживания", icon: "umbrella" }
+        ],
+        pain: "Сейчас вынуждены вести учет в сторонних программах (например, YClients) и страдают от накладок.",
+        solution: "Витрина объединяет учет в один календарь."
+      }
+    ];
+
+    var currentIndex = 0;
+
+    function render() {
+      var item = data[currentIndex];
+      document.getElementById("title").innerText = item.title;
+      document.getElementById("pain").innerText = item.pain;
+      document.getElementById("solution").innerText = item.solution;
+
+      var tagsContainer = document.getElementById("services");
+      tagsContainer.innerHTML = "";
+      item.services.forEach(function(s) {
+        var el = document.createElement("span");
+        el.className = "tag";
+        el.innerHTML = '<span class="tag-icon">' + icons[s.icon] + '</span><span>' + s.text + '</span>';
+        tagsContainer.appendChild(el);
+      });
+
+      for (var i = 0; i < 3; i++) {
+        var btn = document.getElementById("tab-" + i);
+        if (i === currentIndex) {
+          btn.classList.add("active");
+          btn.classList.remove("pulse");
+        } else {
+          btn.classList.remove("active");
+          if (i === currentIndex + 1) {
+            btn.classList.add("pulse");
+          } else {
+            btn.classList.remove("pulse");
+          }
+        }
+      }
+
+      var nextBtn = document.getElementById("btnNext");
+      if (currentIndex === 2) {
+        nextBtn.innerHTML = '<span>В начало</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="3 3 3 8 8 8"/></svg>';
+      } else {
+        nextBtn.innerHTML = '<span>Следующий сегмент</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+      }
+    }
+
+    function showSegment(index) {
+      currentIndex = index;
+      render();
+    }
+
+    function nextSegment() {
+      if (currentIndex < 2) {
+        currentIndex++;
+      } else {
+        currentIndex = 0;
+      }
+      render();
+    }
+
+    render();
+  </script>
+</body>
+</html>
